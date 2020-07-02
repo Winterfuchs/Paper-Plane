@@ -10,9 +10,6 @@ local renderHealthbar = CreateConVar( "ttt_paper_plane_render_healthbar", 0 , {F
 
 AccessorFunc(ENT, "thrower", "Thrower")
 
-ENT.PlayersInSphere = {}
-ENT.RandomPlayer = {}
-
 function ENT:Initialize()
 	self:SetModel("models/props/c_paperplane/c_paperplane.mdl" )
 	self:PhysicsInit( SOLID_VPHYSICS )
@@ -39,37 +36,36 @@ function ENT:SearchPlayer()
 	if SERVER then
 		local pos = self:GetPos();
 		local sphere = ents.FindInSphere(pos, 5000)
+		local playersInSphere = {}
 		local thrower = self:GetThrower()
 
 		for key, v in pairs(sphere) do
 			if TTT2 then
 				if v:IsPlayer() and v:Alive() and !v:IsSpec() and v:GetTeam() != thrower:GetTeam() then
-					table.insert(self.PlayersInSphere, v)
+					table.insert(playersInSphere, v)
 				end
 			else
 				if v:IsPlayer() && v:GetRole() != thrower:GetRole() and v:Alive() and !v:IsSpec() then
-					table.insert(self.PlayersInSphere, v)
+					table.insert(playersInSphere, v)
 				end
 			end
 		end
 
-		TableCount = table.Count(self.PlayersInSphere)
-		self.RandomPlayer = self:GetClosestPlayer(self, self.PlayersInSphere)
+		local closestPlayer = self:GetClosestPlayer(self, playersInSphere)
 
-		if (self.RandomPlayer != nil) then
-
+		if (closestPlayer != nil) then
 			local tracedata = {};
-				tracedata.start = self.RandomPlayer:GetShootPos();
+				tracedata.start = closestPlayer:GetShootPos();
 				tracedata.endpos = self:GetPos();
-				tracedata.filter = { self, self.RandomPlayer };
+				tracedata.filter = { self, closestPlayer };
 				local tr = util.TraceLine(tracedata)
 				if tr.HitPos == tracedata.endpos then
 					local phys = self:GetPhysicsObject()
-					phys:ApplyForceCenter((self:GetPos() - self.RandomPlayer:GetShootPos())*-200 )
-					phys:SetAngles((self:GetPos() - self.RandomPlayer:GetShootPos()):Angle())
+					phys:ApplyForceCenter((self:GetPos() - closestPlayer:GetShootPos())*-200 )
+					phys:SetAngles((self:GetPos() - closestPlayer:GetShootPos()):Angle())
 				end
 		end
-		table.Empty(self.PlayersInSphere)
+		table.Empty(playersInSphere)
 	end
 end
 
