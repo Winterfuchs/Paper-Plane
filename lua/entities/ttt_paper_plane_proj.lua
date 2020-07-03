@@ -125,12 +125,6 @@ function ENT:Draw()
 				draw.RoundedBox( 5, -width / 2 , -5, (self:Health() / paperPlaneHealth:GetInt() * 200) / 1.5, 15, Color(0, 255, 0, 120) )
 				draw.SimpleText("Paper Plane", "ChatFont", 0, -5, Color(255,255,255,255), TEXT_ALIGN_CENTER)
 			cam.End3D2D()
-
-			local pos, material, blue = self:GetPos(), Material( "sprites/light_glow02_add" ), Color(70, 180, 255, 255)
-			cam.Start3D()
-				render.SetMaterial( material )
-				render.DrawSprite( pos, 39, 39, blue )
-			cam.End3D()
 		end
 	end
 end
