@@ -83,7 +83,15 @@ end
 function ENT:Touch( entity )
 	if entity:IsPlayer() && entity != self:GetThrower() then
 		local pos = self:GetPos()
-		util.BlastDamage(self, self:GetThrower(), pos, 150, 200)
+		local inflictor = ents.Create("weapon_ttt_paper_plane")
+		local dmgInfo = DamageInfo()
+
+		dmgInfo:SetDamageType(DMG_BLAST)
+		dmgInfo:SetAttacker(self:GetThrower())
+		dmgInfo:SetInflictor(inflictor)
+		dmgInfo:SetDamage(200)
+
+		util.BlastDamageInfo( dmgInfo, pos, 150 )
 
 		effect = EffectData()
 		effect:SetOrigin(pos)
