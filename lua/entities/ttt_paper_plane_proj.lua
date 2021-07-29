@@ -44,11 +44,15 @@ function ENT:SearchPlayer()
 				if v:IsPlayer() and v:Alive() and not v:IsSpec() and v:GetTeam() ~= thrower:GetTeam() then
 					table.insert(playersInSphere, v)
 				end
-			else
-				if v:IsPlayer() and v:GetRole() ~= thrower:GetRole() and v:Alive() and not v:IsSpec() then
+			elseif CR_VERSION then
+				if v:IsPlayer() and v:Alive() and not v:IsSpec() and not v:IsSameTeam(thrower) then
 					table.insert(playersInSphere, v)
 				end
-			end
+			else
+				if v:IsPlayer() and v:GetRole() ~= thrower:GetRole() and v:Alive() and not v:IsSpec() then
+			table.insert(playersInSphere, v)
+				end
+				end
 		end
 
 		local closestPlayer = self:GetClosestPlayer(self, playersInSphere)
