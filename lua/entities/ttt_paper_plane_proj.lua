@@ -50,9 +50,9 @@ function ENT:SearchPlayer()
 				end
 			else
 				if v:IsPlayer() and v:GetRole() ~= thrower:GetRole() and v:Alive() and not v:IsSpec() then
-			table.insert(playersInSphere, v)
+					table.insert(playersInSphere, v)
 				end
-				end
+			end
 		end
 
 		local closestPlayer = self:GetClosestPlayer(self, playersInSphere)
