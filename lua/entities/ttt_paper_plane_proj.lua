@@ -41,11 +41,11 @@ function ENT:SearchPlayer()
 
 		for key, v in pairs(sphere) do
 			if TTT2 then
-				if v:IsPlayer() and v:Alive() and !v:IsSpec() and v:GetTeam() != thrower:GetTeam() then
+				if v:IsPlayer() and v:Alive() and not v:IsSpec() and v:GetTeam() ~= thrower:GetTeam() then
 					table.insert(playersInSphere, v)
 				end
 			else
-				if v:IsPlayer() && v:GetRole() != thrower:GetRole() and v:Alive() and !v:IsSpec() then
+				if v:IsPlayer() and v:GetRole() ~= thrower:GetRole() and v:Alive() and not v:IsSpec() then
 					table.insert(playersInSphere, v)
 				end
 			end
@@ -53,7 +53,7 @@ function ENT:SearchPlayer()
 
 		local closestPlayer = self:GetClosestPlayer(self, playersInSphere)
 
-		if (closestPlayer != nil) then
+		if (closestPlayer ~= nil) then
 			local tracedata = {};
 				tracedata.start = closestPlayer:GetShootPos();
 				tracedata.endpos = self:GetPos();
@@ -81,7 +81,7 @@ function ENT:GetClosestPlayer(entity, players)
 end
 
 function ENT:Touch( entity )
-	if entity:IsPlayer() && entity != self:GetThrower() then
+	if entity:IsPlayer() and entity ~= self:GetThrower() then
 		local pos = self:GetPos()
 		local inflictor = ents.Create("weapon_ttt_paper_plane")
 		local dmgInfo = DamageInfo()
