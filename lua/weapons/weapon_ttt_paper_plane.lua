@@ -92,18 +92,18 @@ function SWEP:CreatePaperWing()
 				paper_plane:SetNWEntity("paper_plane_owner", ply)
 
 				if TTT2 then
-				local team = TEAMS[ply:GetTeam()]
+					local team = TEAMS[ply:GetTeam()]
 
-				paper_plane.userdata = {
-					team = ply:GetTeam()
-				}
-				timer.Simple( 0.1, function()
-					net.Start("ttt_paper_plane_register_thrower")
-					net.WriteEntity(paper_plane)
-					net.WriteString(ply:GetTeam())
-					net.Broadcast()
-				end)
-			end
+					paper_plane.userdata = {
+						team = ply:GetTeam()
+					}
+					timer.Simple( 0.1, function()
+						net.Start("ttt_paper_plane_register_thrower")
+						net.WriteEntity(paper_plane)
+						net.WriteString(ply:GetTeam())
+						net.Broadcast()
+					end)
+				end
 
 				local phys = paper_plane:GetPhysicsObject()
 					if IsValid(phys) then
