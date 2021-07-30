@@ -47,7 +47,7 @@ SWEP.Secondary.Delay = 1.0
 
 SWEP.Kind = WEAPON_EQUIP
 SWEP.CanBuy = {ROLE_TRAITOR}
-SWEP.LimitedStock = false
+SWEP.LimitedStock = shouldBeLimitedStock:GetBool()
 SWEP.WeaponID = AMMO_PAPER_PLANE
 
 SWEP.AllowDrop = true
