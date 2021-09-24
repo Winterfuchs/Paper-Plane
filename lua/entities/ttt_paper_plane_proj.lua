@@ -7,6 +7,7 @@ ENT.Type = "anim"
 local shouldBeDestroyable = CreateConVar( "ttt_paper_plane_destroyable", 1 , {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_LUA_SERVER}, "Should the paper plane be destoyable?" )
 local paperPlaneHealth = CreateConVar( "ttt_paper_plane_health", 200 , {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_LUA_SERVER}, "How much health should the paper plane have?" )
 local renderHealthbar = CreateConVar( "ttt_paper_plane_render_healthbar", 0 , {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_LUA_SERVER}, "Should the paper plane render a healthbar?" )
+local targetJester = CreateConVar( "ttt_paper_plane_target_jester", 0 , {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED, FCVAR_LUA_SERVER}, "Should the paper plane target jesters for custom roles?" )
 
 AccessorFunc(ENT, "thrower", "Thrower")
 
@@ -45,7 +46,7 @@ function ENT:SearchPlayer()
 					table.insert(playersInSphere, v)
 				end
 			elseif CR_VERSION then
-				if v:IsPlayer() and v:Alive() and not v:IsSpec() and not v:IsSameTeam(thrower) and not v:IsJesterTeam() then
+				if v:IsPlayer() and v:Alive() and not v:IsSpec() and not v:IsSameTeam(thrower) and not (not targetJester and v:IsJesterTeam()) then
 					table.insert(playersInSphere, v)
 				end
 			else
