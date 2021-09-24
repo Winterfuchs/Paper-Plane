@@ -45,7 +45,7 @@ function ENT:SearchPlayer()
 					table.insert(playersInSphere, v)
 				end
 			elseif CR_VERSION then
-				if v:IsPlayer() and v:Alive() and not v:IsSpec() and not v:IsSameTeam(thrower) then
+				if v:IsPlayer() and v:Alive() and not v:IsSpec() and not v:IsSameTeam(thrower) and not v:IsJesterTeam() then
 					table.insert(playersInSphere, v)
 				end
 			else
